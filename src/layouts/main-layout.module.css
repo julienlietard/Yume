@@ -1,0 +1,193 @@
+/*
+ * MainLayout — styles CSS Modules
+ *
+ * Conventions :
+ * - Toutes les valeurs de couleur, espacement, typographie passent par
+ *   les custom properties de ju-design (--color-*, --space-*, --font-*).
+ * - Les fallbacks locaux (ex. #0f0f0f) sont temporaires — à supprimer
+ *   quand les tokens ju-design seront confirmés.
+ * - Pas de media queries dans ce fichier : le layout est fluide par défaut
+ *   via clamp() et les grilles CSS.
+ */
+
+/* ─── Root ─────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-background, #ffffff);
+  color: var(--color-text, #0f0f0f);
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────── */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  /* Glass effect : élégant sur fond clair ou sombre */
+  background-color: var(--color-background-glass, rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+
+  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.06));
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6, 1.5rem);
+
+  max-width: var(--layout-max-width, 72rem);
+  margin-inline: auto;
+  padding-inline: var(--space-6, 1.5rem);
+  padding-block: var(--space-4, 1rem);
+}
+
+/* ─── Logo ──────────────────────────────────────────────────────────────── */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  text-decoration: none;
+  color: inherit;
+  margin-right: auto; /* pousse la nav vers la droite */
+  transition: opacity 200ms ease;
+}
+
+.logo:hover {
+  opacity: 0.75;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  line-height: 1;
+  /* Le kanji 夢 sert de logo minimaliste */
+}
+
+.logoName {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #0f0f0f);
+}
+
+/* ─── Navigation ────────────────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 0.25rem);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--space-3, 0.75rem);
+  padding-block: var(--space-2, 0.5rem);
+  border-radius: var(--radius-md, 0.5rem);
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted, #6b7280);
+  text-decoration: none;
+
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.navLink:hover {
+  color: var(--color-text, #0f0f0f);
+  background-color: var(--color-surface-hover, rgba(0, 0, 0, 0.05));
+}
+
+.navLinkActive {
+  color: var(--color-text, #0f0f0f);
+  background-color: var(--color-surface, rgba(0, 0, 0, 0.06));
+  font-weight: 600;
+}
+
+/* ─── Header actions (auth, futur) ─────────────────────────────────────── */
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+}
+
+/* ─── Main ──────────────────────────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+/* ─── Footer ────────────────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.06));
+  margin-top: auto;
+}
+
+.footerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4, 1rem);
+
+  max-width: var(--layout-max-width, 72rem);
+  margin-inline: auto;
+  padding-inline: var(--space-6, 1.5rem);
+  padding-block: var(--space-6, 1.5rem);
+}
+
+.footerCopy {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #6b7280);
+  margin: 0;
+}
+
+.footerNav {
+  display: flex;
+  gap: var(--space-4, 1rem);
+}
+
+.footerLink {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #6b7280);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.footerLink:hover {
+  color: var(--color-text, #0f0f0f);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .headerInner {
+    padding-inline: var(--space-4, 1rem);
+    padding-block: var(--space-3, 0.75rem);
+  }
+
+  .logoName {
+    /* Cache le nom texte sur très petit écran, garde le kanji */
+    display: none;
+  }
+
+  .navLink {
+    padding-inline: var(--space-2, 0.5rem);
+  }
+
+  .footerInner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-inline: var(--space-4, 1rem);
+  }
+}
