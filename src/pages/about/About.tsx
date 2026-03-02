@@ -1,4 +1,11 @@
 import { Link } from 'react-router-dom';
+import {
+  JUTypography,
+  JUButton,
+  JUBadge,
+  JUSectionHeader,
+  JUCard,
+} from 'ju-library';
 import styles from './about.module.css';
 
 interface Skill {
@@ -18,74 +25,80 @@ export default function About() {
       <div className={styles.inner}>
         {/* ── Intro ───────────────────────────────────────────────── */}
         <section className={styles.intro}>
-          <div className={styles.introText}>
-            <h1 className={styles.name}>Julien Lietard</h1>
-            <p className={styles.role}>Développeur Full Stack · React & TypeScript · Azure</p>
-            <div className={styles.bio}>
-              <p>
-                Je construis des interfaces et des architectures frontend depuis plusieurs années,
-                avec une attention particulière pour la qualité du code, la performance et
-                l'expérience développeur.
-              </p>
-              <p>
-                En parallèle de mon travail, je maintiens <strong>ju-library</strong>, une librairie
-                de composants React, et j'écris sur ce blog pour documenter ce que j'apprends.
-              </p>
-            </div>
-            <div className={styles.links}>
-              <a
-                href="https://julienlietard.fr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkPrimary}
-              >
-                Portfolio →
-              </a>
-              <a
-                href="https://github.com/julienlietard"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.linkSecondary}
-              >
-                GitHub
-              </a>
-            </div>
+          <JUTypography variant="h1">Julien Lietard</JUTypography>
+          
+          <JUTypography variant="lead" muted className={styles.role}>
+            Développeur Full Stack · React & TypeScript · Azure
+          </JUTypography>
+          
+          <div className={styles.bio}>
+            <JUTypography variant="body">
+              Je construis des interfaces et des architectures frontend depuis plusieurs années,
+              avec une attention particulière pour la qualité du code, la performance et
+              l'expérience développeur.
+            </JUTypography>
+            <JUTypography variant="body">
+              En parallèle de mon travail, je maintiens <strong>ju-library</strong>, une librairie
+              de composants React, et j'écris sur ce blog pour documenter ce que j'apprends.
+            </JUTypography>
+          </div>
+          
+          <div className={styles.links}>
+            <a
+              href="https://julienlietard.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <JUButton label="Portfolio →" variant="primary" size="m" />
+            </a>
+            <a
+              href="https://github.com/julienlietard"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <JUButton label="GitHub" variant="ghost" size="m" />
+            </a>
           </div>
         </section>
 
         {/* ── Skills ──────────────────────────────────────────────── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Technologies</h2>
+          <JUSectionHeader title="Technologies" align="left" />
+          
           <div className={styles.skillGrid}>
             {SKILLS.map(({ category, items }) => (
-              <div key={category} className={styles.skillGroup}>
-                <h3 className={styles.skillCategory}>{category}</h3>
-                <ul className={styles.skillList}>
+              <JUCard key={category} variant="outline" padding="md">
+                <JUTypography variant="h4" className={styles.skillCategory}>
+                  {category}
+                </JUTypography>
+                <div className={styles.skillList}>
                   {items.map((item) => (
-                    <li key={item} className={styles.skillItem}>{item}</li>
+                    <JUBadge key={item} label={item} color="default" />
                   ))}
-                </ul>
-              </div>
+                </div>
+              </JUCard>
             ))}
           </div>
         </section>
 
         {/* ── Ce blog ─────────────────────────────────────────────── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Ce blog</h2>
+          <JUSectionHeader title="Ce blog" align="left" />
+          
           <div className={styles.prose}>
-            <p>
+            <JUTypography variant="body">
               <strong>Yume</strong> (夢, <em>rêve</em> en japonais) est mon espace pour penser
               à voix haute sur le développement frontend. Pas de contenu généré, pas de SEO bait —
               juste des notes honnêtes sur ce que j'explore.
-            </p>
-            <p>
+            </JUTypography>
+            <JUTypography variant="body">
               La stack : React 18, TypeScript, Vite, CSS Modules, déployé sur Azure Static Web Apps.
               Le code source est pensé pour évoluer vers une plateforme multi-auteurs.
-            </p>
+            </JUTypography>
           </div>
-          <Link to="/articles" className={styles.linkPrimary} style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
-            Lire les articles →
+          
+          <Link to="/articles" className={styles.ctaLink}>
+            <JUButton label="Lire les articles →" variant="secondary" size="m" />
           </Link>
         </section>
       </div>

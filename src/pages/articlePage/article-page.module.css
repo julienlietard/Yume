@@ -1,52 +1,27 @@
+/*
+ * article-page.module.css — Layout + prose styles
+ * 
+ * Note: Prose content styles are retained because they apply to 
+ * dynamically rendered HTML from Markdown. ju-library components
+ * handle the structured UI elements.
+ */
+
 .root {
   padding-block: 0 clamp(4rem, 10vw, 8rem);
 }
 
 /* ─── Breadcrumbs ───────────────────────────────────────────────────────── */
 
-.breadcrumbs {
-  padding-block: var(--space-4, 1rem);
-  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.06));
+.breadcrumbsWrapper {
+  padding-block: var(--ju-space-4, 1rem);
+  border-bottom: 1px solid var(--ju-color-border, rgba(0, 0, 0, 0.06));
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 .breadcrumbsInner {
   max-width: var(--layout-max-width, 72rem);
   margin-inline: auto;
-  padding-inline: var(--space-6, 1.5rem);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2, 0.5rem);
-  flex-wrap: wrap;
-}
-
-.breadcrumbLink {
-  font-size: 0.8125rem;
-  color: var(--color-text-muted, #6b7280);
-  text-decoration: none;
-  transition: color var(--duration-fast, 150ms) ease;
-}
-
-.breadcrumbLink:hover {
-  color: var(--color-text, #0f0f0f);
-}
-
-.breadcrumbSep {
-  font-size: 0.8125rem;
-  color: var(--color-text-muted, #6b7280);
-  opacity: 0.4;
-}
-
-.breadcrumbCurrent {
-  font-size: 0.8125rem;
-  color: var(--color-text, #0f0f0f);
-  font-weight: 500;
-
-  /* Tronque si trop long */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 30ch;
+  padding-inline: var(--ju-space-6, 1.5rem);
 }
 
 /* ─── Layout ────────────────────────────────────────────────────────────── */
@@ -54,70 +29,44 @@
 .layout {
   max-width: var(--layout-prose-width, 42rem);
   margin-inline: auto;
-  padding-inline: var(--space-6, 1.5rem);
+  padding-inline: var(--ju-space-6, 1.5rem);
 }
 
 /* ─── Article header ────────────────────────────────────────────────────── */
 
 .articleHeader {
-  margin-bottom: var(--space-8, 2rem);
+  margin-bottom: var(--ju-space-8, 2rem);
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2, 0.5rem);
-  margin-bottom: var(--space-4, 1rem);
-}
-
-.tag {
-  display: inline-flex;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.2rem 0.7rem;
-  background: var(--color-surface, rgba(0, 0, 0, 0.06));
-  border-radius: 999px;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.title {
-  font-size: clamp(1.875rem, 5vw, 2.75rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  gap: var(--ju-space-2, 0.5rem);
+  margin-bottom: var(--ju-space-4, 1rem);
 }
 
 .description {
-  margin-top: var(--space-3, 0.75rem);
-  font-size: 1.125rem;
-  color: var(--color-text-muted, #6b7280);
-  line-height: 1.6;
+  margin-top: var(--ju-space-3, 0.75rem);
 }
 
 .meta {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 0.5rem);
+  gap: var(--ju-space-2, 0.5rem);
   flex-wrap: wrap;
-  margin-top: var(--space-5, 1.25rem);
-  font-size: 0.875rem;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.author {
-  font-weight: 500;
-  color: var(--color-text, #0f0f0f);
+  margin-top: var(--ju-space-5, 1.25rem);
 }
 
 .metaSep {
   opacity: 0.35;
+  color: var(--ju-color-text-muted, #6b7280);
 }
 
 /* ─── Cover ─────────────────────────────────────────────────────────────── */
 
 .cover {
-  margin-bottom: var(--space-10, 2.5rem);
-  border-radius: var(--radius-lg, 0.75rem);
+  margin-bottom: var(--ju-space-10, 2.5rem);
+  border-radius: var(--ju-radius-lg, 0.75rem);
   overflow: hidden;
   aspect-ratio: 16 / 9;
 }
@@ -130,14 +79,15 @@
 
 /* ─── Prose content ─────────────────────────────────────────────────────── */
 /*
- * Styles appliqués au HTML rendu depuis le Markdown.
- * Utilise :global() pour cibler les éléments HTML générés dynamiquement.
+ * Styles for dynamically rendered Markdown HTML.
+ * Uses :global() to target generated elements.
+ * These cannot be replaced by ju-library since they're raw HTML.
  */
 
 .content {
   font-size: 1.0625rem;
   line-height: 1.8;
-  color: var(--color-text, #0f0f0f);
+  color: var(--ju-color-text, #0f0f0f);
 }
 
 .content :global(h2) {
@@ -163,11 +113,11 @@
 }
 
 .content :global(a) {
-  color: var(--color-accent, #0070f3);
+  color: var(--ju-color-accent, #0070f3);
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 3px;
-  transition: text-decoration-color var(--duration-fast, 150ms) ease;
+  transition: text-decoration-color 150ms ease;
 }
 
 .content :global(a:hover) {
@@ -196,15 +146,13 @@
 .content :global(blockquote) {
   margin: 1.75em 0;
   padding-left: 1.25rem;
-  border-left: 3px solid var(--color-border, rgba(0, 0, 0, 0.12));
-  color: var(--color-text-muted, #6b7280);
+  border-left: 3px solid var(--ju-color-border, rgba(0, 0, 0, 0.12));
+  color: var(--ju-color-text-muted, #6b7280);
   font-style: italic;
 }
 
 .content :global(pre) {
-  background: var(--color-code-bg, #1a1a1a);
-  color: var(--color-code-text, #e5e5e5);
-  border-radius: var(--radius-md, 0.5rem);
+  color: var(--ju-color-code-text, #e5e5e5);
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
   font-size: 0.875rem;
@@ -214,74 +162,53 @@
 }
 
 .content :global(code) {
-  font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+  font-family: var(--ju-font-mono, 'JetBrains Mono', 'Fira Code', monospace);
   font-size: 0.875em;
 }
 
 .content :global(p code),
 .content :global(li code) {
-  background: var(--color-surface, rgba(0, 0, 0, 0.06));
+  background: var(--ju-color-surface, rgba(0, 0, 0, 0.06));
   padding: 0.15em 0.4em;
   border-radius: 0.25rem;
 }
 
 .content :global(img) {
-  border-radius: var(--radius-md, 0.5rem);
+  border-radius: var(--ju-radius-md, 0.5rem);
   margin: 1.75em 0;
 }
 
 .content :global(hr) {
   border: none;
-  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  border-top: 1px solid var(--ju-color-border, rgba(0, 0, 0, 0.08));
   margin: 2.5em 0;
 }
+
+.islandWrapper {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
 
 /* ─── Footer article ────────────────────────────────────────────────────── */
 
 .articleFooter {
   margin-top: clamp(3rem, 8vw, 5rem);
-  padding-top: var(--space-6, 1.5rem);
-  border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.06));
-}
-
-.backLink {
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--color-text-muted, #6b7280);
-  text-decoration: none;
-  transition: color var(--duration-fast, 150ms) ease,
-              transform var(--duration-base, 250ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
-  display: inline-block;
-}
-
-.backLink:hover {
-  color: var(--color-text, #0f0f0f);
-  transform: translateX(-4px);
-}
-
-/* ─── Loading ───────────────────────────────────────────────────────────── */
-
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-  color: var(--color-text-muted, #6b7280);
-  font-size: 0.9375rem;
+  padding-top: var(--ju-space-6, 1.5rem);
+  border-top: 1px solid var(--ju-color-border, rgba(0, 0, 0, 0.06));
 }
 
 /* ─── Responsive ────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
   .layout {
-    padding-inline: var(--space-4, 1rem);
+    padding-inline: var(--ju-space-4, 1rem);
   }
 
   .breadcrumbsInner {
-    padding-inline: var(--space-4, 1rem);
-  }
-
-  .breadcrumbCurrent {
-    max-width: 20ch;
+    padding-inline: var(--ju-space-4, 1rem);
   }
 }

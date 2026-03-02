@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getArticles, getAllTags } from '@/api/articles';
 import type { ArticlePreview } from '@/types/article';
+import {
+  JUTypography,
+  JUButton,
+  JUCard,
+  JUBadge,
+  JUSkeleton,
+} from 'ju-library';
 import styles from './article-list.module.css';
 
 export default function ArticleList() {
@@ -27,63 +34,78 @@ export default function ArticleList() {
       <div className={styles.inner}>
         {/* ── Header ─────────────────────────────────────────────── */}
         <header className={styles.header}>
-          <h1 className={styles.title}>Articles</h1>
-          <p className={styles.subtitle}>
+          <JUTypography variant="h1">Articles</JUTypography>
+          <JUTypography variant="body" muted className={styles.subtitle}>
             {articles.length} article{articles.length !== 1 ? 's' : ''} publiés
-          </p>
+          </JUTypography>
         </header>
 
         {/* ── Filtres par tag ─────────────────────────────────────── */}
         {tags.length > 0 && (
           <nav aria-label="Filtrer par tag" className={styles.tagNav}>
-            <button
-              className={[styles.tagBtn, activeTag === null ? styles.tagBtnActive : ''].join(' ')}
+            <JUButton
+              label="Tous"
+              variant={activeTag === null ? 'primary' : 'ghost'}
+              size="s"
               onClick={() => setActiveTag(null)}
-            >
-              Tous
-            </button>
+            />
             {tags.map((tag) => (
-              <button
+              <JUButton
                 key={tag}
-                className={[styles.tagBtn, activeTag === tag ? styles.tagBtnActive : ''].join(' ')}
+                label={tag}
+                variant={activeTag === tag ? 'primary' : 'ghost'}
+                size="s"
                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                 aria-pressed={activeTag === tag}
-              >
-                {tag}
-              </button>
+              />
             ))}
           </nav>
         )}
 
         {/* ── Liste ──────────────────────────────────────────────── */}
         {loading ? (
-          <p className={styles.loading}>Chargement…</p>
+          <div className={styles.skeletonList}>
+            {[1, 2, 3].map((i) => (
+              <JUSkeleton key={i} variant="rounded" height={180} />
+            ))}
+          </div>
         ) : filtered.length === 0 ? (
-          <p className={styles.empty}>Aucun article pour ce tag.</p>
+          <JUTypography variant="body" muted align="center" className={styles.empty}>
+            Aucun article pour ce tag.
+          </JUTypography>
         ) : (
           <ul className={styles.list}>
             {filtered.map((article) => (
-              <li key={article.slug} className={styles.item}>
-                <Link to={`/articles/${article.slug}`} className={styles.card}>
-                  <div className={styles.cardMeta}>
-                    <time dateTime={article.date} className={styles.date}>
-                      {new Date(article.date).toLocaleDateString('fr-FR', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    {article.readingTime && (
-                      <span className={styles.readingTime}>{article.readingTime} min de lecture</span>
-                    )}
-                  </div>
-                  <h2 className={styles.cardTitle}>{article.title}</h2>
-                  <p className={styles.cardDescription}>{article.description}</p>
-                  <div className={styles.cardTags}>
-                    {article.tags.map((tag) => (
-                      <span key={tag} className={styles.tag}>{tag}</span>
-                    ))}
-                  </div>
+              <li key={article.slug}>
+                <Link to={`/articles/${article.slug}`} className={styles.cardLink}>
+                  <JUCard variant="outline" padding="md" interactive>
+                    <div className={styles.cardMeta}>
+                      <JUTypography variant="caption" muted>
+                        {new Date(article.date).toLocaleDateString('fr-FR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </JUTypography>
+                      {article.readingTime && (
+                        <JUTypography variant="caption" muted>
+                          {article.readingTime} min de lecture
+                        </JUTypography>
+                      )}
+                    </div>
+                    
+                    <JUTypography variant="h3">{article.title}</JUTypography>
+                    
+                    <JUTypography variant="body" muted className={styles.cardDescription}>
+                      {article.description}
+                    </JUTypography>
+                    
+                    <div className={styles.cardTags}>
+                      {article.tags.map((tag) => (
+                        <JUBadge key={tag} label={tag} color="blue" />
+                      ))}
+                    </div>
+                  </JUCard>
                 </Link>
               </li>
             ))}

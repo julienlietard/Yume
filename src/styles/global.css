@@ -1,11 +1,12 @@
 /*
- * global.css — Reset minimal + variables CSS locales de Yume
+ * global.css — Minimal reset + Yume-specific layout variables
  *
- * Ce fichier NE redéfinit pas les tokens ju-design.
- * Il ajoute uniquement ce qui est spécifique à Yume et non couvert par ju-design.
+ * ju-library provides all design tokens (colors, spacing, typography).
+ * This file only contains:
+ * 1. Basic CSS reset
+ * 2. Yume-specific layout variables
+ * 3. Accessibility utilities
  */
-
-/* ─── Reset ─────────────────────────────────────────────────────────────── */
 
 *,
 *::before,
@@ -16,24 +17,20 @@
 }
 
 html {
-  /* Scroll fluide pour les ancres (ToC des articles) */
   scroll-behavior: smooth;
-
-  /* Évite le zoom sur les inputs iOS */
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(
-    --font-sans,
+    --ju-font-sans,
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif
   );
-  font-size: var(--font-size-base, 1rem);
-  line-height: var(--line-height-base, 1.6);
-  color: var(--color-text, #0f0f0f);
-  background-color: var(--color-background, #ffffff);
+  font-size: var(--ju-font-size-base, 1rem);
+  line-height: var(--ju-line-height-base, 1.6);
+  color: var(--ju-color-text, #0f0f0f);
+  background-color: var(--ju-color-background, #ffffff);
 
-  /* Anti-aliasing pour la lisibilité typographique */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -46,21 +43,37 @@ svg {
 }
 
 a {
-  color: var(--color-accent, #0070f3);
+  color: var(--ju-color-accent, #0070f3);
 }
 
-/* ─── Skip link accessibilité ───────────────────────────────────────────── */
+/* ─── Yume-specific layout variables ────────────────────────────────────── */
+/*
+ * These are specific to Yume's layout and not part of ju-library.
+ * They define the content width constraints for the blog.
+ */
+
+:root {
+  /* Layout */
+  --layout-max-width: 72rem;       /* 1152px - max content width */
+  --layout-prose-width: 42rem;     /* ~680px - ideal reading width */
+
+  /* Animation (Yume signature, complements ju-library) */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Skip link (accessibility) ─────────────────────────────────────────── */
 
 .skip-link {
   position: absolute;
   top: -100%;
-  left: var(--space-4, 1rem);
+  left: var(--ju-space-4, 1rem);
   z-index: 9999;
 
-  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
-  background: var(--color-accent, #0070f3);
+  padding: var(--ju-space-2, 0.5rem) var(--ju-space-4, 1rem);
+  background: var(--ju-color-accent, #0070f3);
   color: #fff;
-  border-radius: var(--radius-md, 0.5rem);
+  border-radius: var(--ju-radius-md, 0.5rem);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
@@ -69,46 +82,20 @@ a {
 }
 
 .skip-link:focus {
-  top: var(--space-4, 1rem);
+  top: var(--ju-space-4, 1rem);
 }
 
-/* ─── Variables locales Yume ────────────────────────────────────────────── */
-/*
- * À terme, toutes ces valeurs seront issues de ju-design.
- * Ces fallbacks permettent de travailler sans ju-design installé
- * (CI, Storybook, etc.).
- */
-
-:root {
-  /* Layout */
-  --layout-max-width: 72rem;       /* 1152px */
-  --layout-prose-width: 42rem;     /* ~680px — largeur idéale pour la lecture */
-
-  /* Animation signature Yume */
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Durées */
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 400ms;
-}
-
-/* ─── Focus visible global ──────────────────────────────────────────────── */
-/*
- * Focus ring accessible et esthétique.
- * :focus-visible évite le ring sur les clics souris.
- */
+/* ─── Focus visible (accessibility) ─────────────────────────────────────── */
 
 :focus-visible {
-  outline: 2px solid var(--color-accent, #0070f3);
+  outline: 2px solid var(--ju-color-accent, #0070f3);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* ─── Sélection de texte ────────────────────────────────────────────────── */
+/* ─── Text selection ────────────────────────────────────────────────────── */
 
 ::selection {
-  background-color: var(--color-accent, #0070f3);
+  background-color: var(--ju-color-accent, #0070f3);
   color: #fff;
 }

@@ -1,17 +1,14 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
+import { JUTypography, JUButton, JUQuoteFooter } from 'ju-library';
 import styles from './main-layout.module.css';
 
 /**
  * Layout racine partagé par toutes les pages.
  *
  * Structure :
- *   <header> — navigation principale
+ *   <header> — navigation principale (ju-library components)
  *   <main>   — contenu de la page via <Outlet>
  *   <footer> — liens secondaires
- *
- * Anticipation : quand l'auth arrivera, le header contiendra
- * le UserMenu (avatar, dashboard, déconnexion). L'emplacement
- * est prévu dans .header__actions.
  */
 
 interface NavItem {
@@ -32,20 +29,22 @@ export default function MainLayout() {
           {/* Logo / wordmark */}
           <Link to="/" className={styles.logo} aria-label="Yume — retour à l'accueil">
             <span className={styles.logoText}>夢</span>
-            <span className={styles.logoName}>Yume</span>
+            <JUTypography variant="body" as="span" className={styles.logoName}>
+              Yume
+            </JUTypography>
           </Link>
 
           {/* Navigation principale */}
           <nav aria-label="Navigation principale" className={styles.nav}>
             {NAV_ITEMS.map(({ to, label }) => (
-              <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) =>
-                  [styles.navLink, isActive ? styles.navLinkActive : ''].join(' ')
-                }
-              >
-                {label}
+              <NavLink key={to} to={to} className={styles.navLinkWrapper}>
+                {({ isActive }) => (
+                  <JUButton
+                    label={label}
+                    variant={isActive ? 'secondary' : 'ghost'}
+                    size="s"
+                  />
+                )}
               </NavLink>
             ))}
           </nav>
@@ -63,23 +62,18 @@ export default function MainLayout() {
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.footerInner}>
-          <p className={styles.footerCopy}>
-            © {new Date().getFullYear()} Julien Lietard —{' '}
-            <a
-              href="https://julienlietard.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.footerLink}
-            >
-              Portfolio
-            </a>
-          </p>
-          <nav aria-label="Navigation secondaire" className={styles.footerNav}>
-            <Link to="/articles" className={styles.footerLink}>Articles</Link>
-            <Link to="/about" className={styles.footerLink}>À propos</Link>
-          </nav>
-        </div>
+        <JUQuoteFooter
+  quotes={[
+    { text: "Le code est de la poésie.", author: "Anonyme" },
+    { text: "Simplicité est sophistication.", author: "Da Vinci" },
+  ]}
+  backgroundColor="#161616"
+  logo={{ src: '/logo.svg', alt: 'Yume' }}
+  legal={{
+    copyright: '© 2026 Julien Lietard',
+    links: [{ label: 'Portfolio', href: 'https://julienlietard.fr' }],
+  }}
+/>
       </footer>
     </div>
   );

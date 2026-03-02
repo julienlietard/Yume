@@ -14,7 +14,7 @@ const About = lazy(() => import('@/pages/about/About'));
 
 /**
  * Composant de fallback pendant le lazy loading.
- * À remplacer par un skeleton component de ju-design quand disponible.
+ * À remplacer par un skeleton component de ju-library quand disponible.
  */
 function PageLoader() {
   return (
@@ -26,7 +26,7 @@ function PageLoader() {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '60vh',
-        color: 'var(--color-text-muted, #6b7280)',
+        color: 'var(--ju-color-text-muted, #6b7280)',
         fontSize: '0.875rem',
       }}
     >

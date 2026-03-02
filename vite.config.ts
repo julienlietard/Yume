@@ -7,6 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      // Workaround: accès direct à index.css
+      'ju-library/index.css': resolve(__dirname, './node_modules/ju-library/dist/index.css'),
     },
   },
 });

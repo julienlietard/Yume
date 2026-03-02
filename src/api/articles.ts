@@ -80,7 +80,6 @@ function slugFromPath(filePath: string): string {
 
 async function parseMarkdownFile(filePath: string, rawContent: string): Promise<Article> {
   const { data, content: markdownBody } = parseFrontmatter(rawContent);
-  const html = await markdownToHtml(markdownBody);
 
   return {
     slug: slugFromPath(filePath),
@@ -92,7 +91,7 @@ async function parseMarkdownFile(filePath: string, rawContent: string): Promise<
     coverImage: data.coverImage,
     published: data.published ?? false,
     readingTime: estimateReadingTime(markdownBody),
-    content: html,
+    content: markdownBody,  // ← Markdown brut, pas HTML
   };
 }
 
